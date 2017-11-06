@@ -3,7 +3,11 @@
 # Exit on any error
 set -e
 
+# Build Solution
+cd src
+dotnet build
+
 # Execute Unit tests
-cd tests
-dotnet restore
-dotnet xunit
+# cd tests
+# dotnet restore
+# dotnet xunit
