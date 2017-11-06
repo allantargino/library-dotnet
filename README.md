@@ -5,7 +5,7 @@ Small description of your project.
 
 | Version                              	| Status                         |
 |-----------------------------------	| ------------------------------ |
-| 1.0.0                                	| [![Build Status](https://travis-ci.org/allantargino/DataGround.svg?branch=master)](https://travis-ci.org/allantargino/DataGround) |
+| 1.0.0                                	| [![Build Status](https://travis-ci.org/DXBrazil/library-dotnet.svg?branch=master)](https://travis-ci.org/DXBrazil/library-dotnet) |
 
 
 
