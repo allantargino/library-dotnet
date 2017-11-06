@@ -46,7 +46,7 @@ namespace CSEBrazil.Library.Utils
         public static async Task<T> PostContentAsync<T>(this HttpClient client, string uri, object content, int RetryCount = 3, int DelayCount = 500) where T : class
         {
             var strContent = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
-            var result = await RunTaskWithAutoRetryOnQuotaLimitExceededError<HttpResponseMessage>(() => client.PostAsync(uri, strContent), RetryCount, DelayCount));
+            var result = await RunTaskWithAutoRetryOnQuotaLimitExceededError<HttpResponseMessage>(() => client.PostAsync(uri, strContent), RetryCount, DelayCount);
             result.EnsureSuccessStatusCode();
             var strResponse = await result.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<T>(strResponse);
@@ -55,7 +55,7 @@ namespace CSEBrazil.Library.Utils
         public static async Task<T> PutContentAsync<T>(this HttpClient client, string uri, object content, int RetryCount = 3, int DelayCount = 500) where T : class
         {
             var strContent = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
-            var result = await RunTaskWithAutoRetryOnQuotaLimitExceededError<HttpResponseMessage>(() => client.PutAsync(uri, strContent), RetryCount, DelayCount));
+            var result = await RunTaskWithAutoRetryOnQuotaLimitExceededError<HttpResponseMessage>(() => client.PutAsync(uri, strContent), RetryCount, DelayCount);
             result.EnsureSuccessStatusCode();
             var strResponse = await result.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<T>(strResponse);
