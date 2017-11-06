@@ -42,6 +42,7 @@ namespace CSEBrazil.Library.Utils
             return response;
         }
 
+
         public static async Task<T> PostContentAsync<T>(this HttpClient client, string uri, object content, int RetryCount = 3, int DelayCount = 500) where T : class
         {
             var strContent = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
