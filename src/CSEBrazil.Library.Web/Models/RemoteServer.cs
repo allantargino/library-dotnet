@@ -1,12 +1,12 @@
-﻿using CSEBrazil.Library.Utils.Web.Interfaces;
+﻿using CSEBrazil.Library.Web.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 
-namespace CSEBrazil.Library.Utils.Web.Models
+namespace CSEBrazil.Library.Web.Models
 {
-    class DotNetRemoteServer : IServer
+    class RemoteServer : IServer
     {
         public HttpClient GetAssistantClient()
         {

@@ -1,11 +1,10 @@
-﻿using CSEBrazil.Library.Utils.Web.Interfaces;
-using CSEBrazil.Library.Utils.Web.Models;
+﻿using CSEBrazil.Library.Web.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 
-namespace CSEBrazil.Library.Utils.Web
+namespace CSEBrazil.Library.Web.Models
 {
     public class ServerManager
     {
@@ -33,7 +32,7 @@ namespace CSEBrazil.Library.Utils.Web
         {
             if (_servers == null)
             {
-                _servers = new DotNetRemoteServer();
+                _servers = new RemoteServer();
                 _servers.Start();
             }
         }

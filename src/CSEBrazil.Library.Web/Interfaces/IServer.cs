@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 
-namespace CSEBrazil.Library.Utils.Web.Interfaces
+namespace CSEBrazil.Library.Web.Interfaces
 {
     public interface IServer
     {
