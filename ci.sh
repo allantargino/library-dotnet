@@ -5,6 +5,7 @@ set -e
 
 # Build Solution
 cd src
+dotnet restore
 dotnet build
 
 # Execute Unit tests

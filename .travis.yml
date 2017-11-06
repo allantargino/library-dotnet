@@ -1,12 +1,6 @@
 language: csharp
-sudo: required
-solution: ./src/SolutionName.sln
-matrix:
-  include:
-    - dotnet: 1.1.0
-      mono: none
-      dist: trusty
-before_install:
-  - chmod +x ./ci.sh
+mono: none
+dotnet: 2.0.0
+dist: trusty
 script:
   - ./ci.sh
