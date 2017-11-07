@@ -10,29 +10,23 @@ namespace CSEBrazil.Library.Web.Models
     {
         private static IServer _servers;
 
-        public static HttpClient GetAssistantClient()
+        public ServerManager()
         {
-            CheckSingleton();
-            return _servers.GetAssistantClient();
+
         }
 
-        public static HttpClient GetAuthClient()
+        public static HttpClient GetClient(string service)
         {
             CheckSingleton();
-            return _servers.GetAuthClient();
-        }
-
-        public static HttpClient GetRegistryClient()
-        {
-            CheckSingleton();
-            return _servers.GetRegistryClient();
+            return _servers.GetClient(service);
         }
 
         private static void CheckSingleton()
         {
             if (_servers == null)
             {
-                _servers = new RemoteServer();
+                _servers = new LocalServer();
+                
                 _servers.Start();
             }
         }

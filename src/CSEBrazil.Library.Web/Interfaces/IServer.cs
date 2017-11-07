@@ -8,8 +8,8 @@ namespace CSEBrazil.Library.Web.Interfaces
     public interface IServer
     {
         void Start();
-        HttpClient GetAssistantClient();
-        HttpClient GetAuthClient();
-        HttpClient GetRegistryClient();
+        HttpClient GetClient(string service);
+
+        void AddService<TStartup>(string serviceName) where TStartup : class;
     }
 }

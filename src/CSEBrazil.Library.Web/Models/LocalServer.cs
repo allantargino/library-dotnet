@@ -11,36 +11,46 @@ namespace CSEBrazil.Library.Web.Models
 {
     public class LocalServer : IServer
     {
+        private Random random;
         private List<int> Ports { get; }
         private string JsonFileSettings { get; }
         private Dictionary<string, string> ExtraSettings { get; }
+        public Dictionary<string, IWebHost> Servers { get; }
 
         public LocalServer()
         {
-            var rnd = new Random();
-            Ports = new List<int>();
-            for (int i = 0; i < 3; i++)
-                Ports.Add(rnd.Next(1024, 65536));
-
             JsonFileSettings = "appsettings.json";
-            ExtraSettings = new Dictionary<string, string>
-            {
-                { "Services:Assistant:Endpoint", $"http://localhost:{Ports[0]}"},
-                { "Services:Registry:Endpoint", $"http://localhost:{Ports[1]}"},
-                { "Services:Auth:Endpoint", $"http://localhost:{Ports[2]}"}
-            };
+            ExtraSettings = new Dictionary<string, string>();
+            Servers = new Dictionary<string, IWebHost>();
+            Ports = new List<int>();
+            random = new Random();
+        }
+
+        public void AddService<TStartup>(string serviceName) where TStartup : class
+        {
+            var port = GetAvailablePort();
+            Ports.Add(port);
+
+            var serviceHost = GetWebHost<TStartup>(port);
+            Servers.Add(serviceName, serviceHost);
+
+            ExtraSettings.Add($"Services:{serviceName}:Endpoint", $"http://localhost:{port}");
         }
 
         public void Start()
         {
-            GetWebHost<Assistant.Startup>(Ports[0]).Start();
-            GetWebHost<Registry.Startup>(Ports[1]).Start();
-            GetWebHost<Auth.Startup>(Ports[2]).Start();
+            foreach (var entry in Servers)
+                entry.Value.Start();
         }
 
-        public HttpClient GetAssistantClient() => GetClient(Ports[0]);
-        public HttpClient GetRegistryClient() => GetClient(Ports[1]);
-        public HttpClient GetAuthClient() => GetClient(Ports[2]);
+        public HttpClient GetClient(string service)
+        {
+            string[] keys = new string[Servers.Keys.Count];
+            Servers.Keys.CopyTo(keys, 0);
+            var index = Array.IndexOf(keys, service);
+
+            return GetClient(Ports[index]);
+        }
 
         private HttpClient GetClient(int port)
         {
@@ -50,13 +60,20 @@ namespace CSEBrazil.Library.Web.Models
             };
         }
 
+        private int GetAvailablePort()
+        {
+            var port = random.Next(1024, 65536);
+
+            return port;
+        }
+
         private IWebHost GetWebHost<TStartup>(int port) where TStartup : class
         {
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile(JsonFileSettings)
                 .AddInMemoryCollection(ExtraSettings)
                 .Build();
-
+            
             return WebHost.CreateDefaultBuilder()
                     .UseStartup<TStartup>()
                     .UseUrls($"http://0.0.0.0:{port}")

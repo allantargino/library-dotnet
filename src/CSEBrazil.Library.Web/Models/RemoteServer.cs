@@ -8,20 +8,15 @@ namespace CSEBrazil.Library.Web.Models
 {
     class RemoteServer : IServer
     {
-        public HttpClient GetAssistantClient()
+
+        public void AddService<TStartup>(string serviceName) where TStartup : class
         {
-            return new HttpClient
-            {
-                BaseAddress = new Uri("http://mv-assistant.azurewebsites.net/api/")
-            };
+            throw new NotImplementedException();
         }
 
-        public HttpClient GetAuthClient()
+        public HttpClient GetClient(string service)
         {
-            return new HttpClient
-            {
-                BaseAddress = new Uri("http://mv-auth.azurewebsites.net/api/")
-            };
+            throw new NotImplementedException();
         }
 
         public HttpClient GetRegistryClient()
